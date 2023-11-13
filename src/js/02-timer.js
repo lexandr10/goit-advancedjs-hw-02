@@ -33,8 +33,7 @@ function pickDate(selectedDates) {
     return alert('Please choose a date in the future');
   }
   timeDifference = selectedDates.getTime() - current;
-  formatDate = convertMs(timeDifference);
-  renderDate(formatDate);
+
   elements.btnStart.removeAttribute('disabled', true);
 }
 elements.btnStart.addEventListener('click', handlerStart);
@@ -62,15 +61,14 @@ function convertMs(ms) {
 }
 
 function startTime() {
+  formatDate = convertMs(timeDifference);
+  renderDate(formatDate);
   elements.btnStart.setAttribute('disabled', true);
   elements.inputPickDate.setAttribute('disabled', true);
   timeDifference -= 1000;
   if (elements.seconds.textContent <= 0 && elements.minutes.textContent <= 0) {
     alert('Time end');
     clearInterval(timerId);
-  } else {
-    formatDate = convertMs(timeDifference);
-    renderDate(formatDate);
   }
 }
 
@@ -88,8 +86,11 @@ window.addEventListener('keydown', e => {
   }
 });
 function renderDate(formatDate) {
-  elements.seconds.textContent = formatDate.seconds;
-  elements.minutes.textContent = formatDate.minutes;
-  elements.hours.textContent = formatDate.hours;
-  elements.days.textContent = formatDate.days;
+  elements.seconds.textContent = addLeadingZero(formatDate.seconds);
+  elements.minutes.textContent = addLeadingZero(formatDate.minutes);
+  elements.hours.textContent = addLeadingZero(formatDate.hours);
+  elements.days.textContent = addLeadingZero(formatDate.days);
+}
+function addLeadingZero(formatDate) {
+  return String(formatDate).padStart(2, 0);
 }

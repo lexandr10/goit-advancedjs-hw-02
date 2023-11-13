@@ -8,7 +8,6 @@ form.addEventListener('submit', onSubmitForm);
 // Submit form
 function onSubmitForm(e) {
   e.preventDefault();
-
   let delay = Number(form.delay.value);
 
   for (let i = 1; i <= form.amount.value; i += 1) {
@@ -25,6 +24,7 @@ function onSubmitForm(e) {
       });
     delay += Number(form.step.value);
   }
+  e.currentTarget.reset();
 }
 
 // Create promise
